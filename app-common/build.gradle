@@ -1,0 +1,15 @@
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-configuration-processor"
+    compile "org.apache.commons:commons-lang3:3.10"
+    compile "org.apache.commons:commons-collections4:4.4"
+    compile "org.modelmapper:modelmapper:2.3.7"
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}

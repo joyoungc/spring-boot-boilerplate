@@ -1,0 +1,10 @@
+= Spring Boot Boilerplate
+:github: https://github.com/joyoungc/spring-boot-boilerplate
+
+== Modules
+
+=== app-common
+프로젝트를 위한 공통 Library
+
+=== app-data
+Data 관련 Library 및 Domain, Repository

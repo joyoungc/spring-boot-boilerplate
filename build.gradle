@@ -1,0 +1,81 @@
+buildscript {
+    def springBootVersion = '2.3.1.RELEASE'
+    def springGradlePluginVersion = '1.0.9.RELEASE'
+    def querydslPluginVersion = '1.0.10'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+        classpath "io.spring.gradle:dependency-management-plugin:$springGradlePluginVersion"
+        classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:$querydslPluginVersion"
+    }
+}
+
+/* settings.gradle에 include된 프로젝트 전부를 관리 */
+subprojects {
+
+    apply plugin: "java"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+
+    group = "io.joyoungc.app"
+    version = "0.0.1-SNAPSHOT"
+    sourceCompatibility = "11"
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    /* 서브 모듈 공통 디펜던시 정의 */
+    dependencies {
+        compileOnly "org.projectlombok:lombok"
+        annotationProcessor "org.projectlombok:lombok"
+        testCompileOnly "org.projectlombok:lombok"
+        testAnnotationProcessor "org.projectlombok:lombok"
+        testImplementation("org.springframework.boot:spring-boot-starter-test") {
+            exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        exclude "**/*" /* build시 테스트 Skip */
+    }
+
+    /* 서브 모듈 추가시 기본 디렉토리를 자동으로 생성 */
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if (!it.exists()) {
+                it.mkdirs()
+            }
+        }
+
+        sourceSets*.resources.srcDirs*.each {
+            if (!it.exists()) {
+                it.mkdirs()
+            }
+        }
+    }
+
+}
+
+/* project를 정의. 공통으로 사용되는 모듈을 추가 */
+project(":app-data") {
+    dependencies {
+        implementation project(":app-common")
+    }
+}
+
