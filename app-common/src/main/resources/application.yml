@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: boilerplate-app
+  jackson:
+    default-property-inclusion: non_null
+  output:
+    ansi:
+      enabled: always
+
+# 로깅 설정
+logging:
+  level:
+    com.joyoungc.app: debug
+    org:
+      springframework:
+        web: debug
+        jdbc: debug
+        transaction: trace
+      hibernate:
+        type.descriptor.sql.BasicBinder: trace
+    jdbc:
+      sqlonly: error
+      resultset: error
