@@ -79,3 +79,15 @@ project(":app-data") {
     }
 }
 
+project(":app-api") {
+    dependencies {
+        implementation project(":app-common")
+        implementation project(":app-data")
+    }
+}
+
+project(":app-web") {
+    dependencies {
+        implementation project(":app-common")
+    }
+}

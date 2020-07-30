@@ -1,0 +1,11 @@
+# 서버설정
+server:
+  port: 9020
+#  error.whitelabel.enabled: false
+
+# 스프링 프레임워크 설정
+spring:
+  application:
+    name: app-web
+  jpa:
+    open-in-view: false
